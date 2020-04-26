@@ -45,6 +45,7 @@ file_array_content.forEach(company_data => {
 
 var questions_keys = []
 
+//separate the data into fav, unfav and neutral
 key_companie.forEach( key => {
     var questions = []
     
@@ -83,6 +84,7 @@ key_companie.forEach( key => {
     companies_relation[key]['relation'] = questions;
 })
 
+//Show answers report
 console.log('\nFav answers by questions:');
 questions_keys.forEach(question_key => {
     string_report = question_key + ': ';
@@ -92,11 +94,21 @@ questions_keys.forEach(question_key => {
     key_companie.forEach( company_key => {
         string_report += company_key +' '+ (companies_relation[company_key]['relation'][question_key]['neutral'] * 100/
             companies_relation[company_key]['relation'][question_key]['total']).toFixed(2) +'% fav'+ 
-            (size == i ? '' : ', ')
+            (size == i ? '' : ', ') //check if is already the last company
 
         i++;
     })
 
     console.log(string_report)
-    
+})
+
+//show valid and invalid answers
+console.log('\n\nValid Answers:\n');
+key_companie.forEach( company_key => {
+    console.log(company_key+': '+valid_answers[company_key])
+})
+
+console.log('\n\nInvalid Answers:\n');
+key_companie.forEach( company_key => {
+    console.log(company_key+': '+invalid_answers[company_key])
 })
