@@ -43,11 +43,7 @@ file_array_content.forEach(company_data => {
     }
 })
 
-// console.log(valid_answers)
-// console.log(invalid_answers)
 var questions_keys = []
-
-console.log(companies_relation)
 
 key_companie.forEach( key => {
     var questions = []
@@ -70,16 +66,37 @@ key_companie.forEach( key => {
             questions[relation[0]]['unfav'] = relation[1] == '3' || relation[1] == '4' ? 1 : 0
             questions[relation[0]]['total'] = 1
 
-            questions_keys.push(relation[0])
+            if(!questions_keys.includes(relation[0])){
+                questions_keys.push(relation[0])
+            }   
         }
     })
 
-    console.log(key)
+    console.log('\n'+key)
 
     questions_keys.forEach(key => {
         console.log(key+': '+(questions[key]['fav'] * 100/questions[key]['total']).toFixed(2) +'% fav, ' +
-        (questions[key]['neutral'] * 100/questions[key]['total']).toFixed(2)+ '% neutral, '+
-        (questions[key]['unfav'] * 100/questions[key]['total']).toFixed(2)+ '% unfav ');
+            (questions[key]['neutral'] * 100/questions[key]['total']).toFixed(2)+ '% neutral, '+
+            (questions[key]['unfav'] * 100/questions[key]['total']).toFixed(2)+ '% unfav ');
     })
+
+    companies_relation[key]['relation'] = questions;
+})
+
+console.log('\nFav answers by questions:');
+questions_keys.forEach(question_key => {
+    string_report = question_key + ': ';
+    size = key_companie.length
+    i = 1;
+
+    key_companie.forEach( company_key => {
+        string_report += company_key +' '+ (companies_relation[company_key]['relation'][question_key]['neutral'] * 100/
+            companies_relation[company_key]['relation'][question_key]['total']).toFixed(2) +'% fav'+ 
+            (size == i ? '' : ', ')
+
+        i++;
+    })
+
+    console.log(string_report)
     
 })
