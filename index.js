@@ -25,7 +25,11 @@ file_array_content.forEach(company_data => {
 
     for(i = 0 ; i < size ; i ++){
         if(i > 0){
-            companies_relation[company_data[0]].push(company_data[i].split(" "))
+            aux = company_data[i].split(" ")
+
+            if(parseInt(aux[1]) >= 0 && aux[1] <= 4)
+                companies_relation[company_data[0]].push(aux)
+
         }else{
             companies_relation[company_data[0]] = []
         }
